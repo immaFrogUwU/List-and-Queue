@@ -1,0 +1,244 @@
+using static System.Console;
+using System;
+using System.IO;
+using System.Collections;
+using System.Collections.Generic;
+
+namespace DanhSach_Hangcho
+{
+    public class List_Queue
+    {
+       
+        public static void Main()
+        {
+            //List_Queue l1 = new List_Queue();
+            //l1.ArrayList();
+            //List_Queue l2 = new List_Queue();
+            //l2.Stack();
+            //List_Queue l3 = new List_Queue();
+            //l3.Bai6();
+            //List_Queue l4 = new List_Queue();
+            //l4.Bai5();
+            List_Queue l5 = new List_Queue();
+            l5.Bai4();
+        }
+        public void ArrayList()
+        {
+            ArrayList A1= new ArrayList();
+            ArrayList A2 = new ArrayList();
+            ArrayList A3 = new ArrayList(new object[] { 123, "Vintamin", true } );
+            A1.AddRange(A3); A2.AddRange(A3 );
+            WriteLine("Hien thi A1: ");
+            foreach (var item in A1)
+            {
+                Write(item + " ");
+            }
+            WriteLine("\nHien thi A2: ");
+            foreach (var item in A2)
+            {
+                Write(item + " ");
+            }
+
+           
+            foreach (var item in A1)
+            {
+                Write("\nNhap 1 phan tu de kiem tra: ");
+                var v1 = ReadLine();
+                if (A1.Contains(123))
+                {
+                    WriteLine("ArrayList A1 co phan tu " + v1);
+                    break;
+                }
+                else
+                {
+                    WriteLine("ArrayList A1 khong co phan tu " + v1);
+                    break;
+                }
+            }        
+           
+        }
+        public void Stack()
+        {
+            Stack S1 = new Stack();
+            S1.Push(1);
+            S1.Push(2);
+            S1.Push(3);
+            Write("Hien thi stack S1 ra man hinh: \n");
+            foreach(var item in S1)
+            {
+                WriteLine(item);
+            }
+            Write("\nNhap gia tri can kiem tra: ");
+            int check = Convert.ToInt32(ReadLine());
+            foreach (var item in S1)
+            {
+                if (S1.Contains(check))
+                {
+                    Write("Stack S1 co chua phan tu " + check);
+                    break;
+                }
+            }
+            WriteLine();
+
+            Write("Copy stack ra mang 1 chieu: \n");
+            int[] arr1 = new int[3];
+            S1.CopyTo(arr1, 0);
+            foreach (int item in arr1)
+            {
+                WriteLine(item);
+            }
+
+            S1.Pop();
+            WriteLine("\nXoa phan tu dau cua stack S1: ");
+            foreach (var item in S1)
+            {
+                WriteLine(item);
+            }
+
+            S1.Clear();                 //Xóa tất cả stack
+            
+        }
+        
+        public void ConvertFromDecimalToBianary(int x)      //Tạo hàm chuyển số thập phân sang số nhị phân
+        {
+            Stack S1 = new Stack();
+            while (x > 0)
+            {
+
+                S1.Push(x%2);
+                x = x / 2;
+                
+            }
+            while (S1.Count !=0)
+            {
+                Write(S1.Peek());
+                S1.Pop() ;    
+            }
+            WriteLine();
+
+        }
+        public void Bai6()                    //Hiển thị các số nhị phân từ 1 đến N ra màn hình using hàm chuyển số
+        {
+            Write("Nhap vao so duong N: ");
+            int n  = Convert.ToInt32(ReadLine());
+            for (int i = 0; i <= n; i++)
+            {
+                ConvertFromDecimalToBianary(i);
+            }
+        }
+
+        public void Bai5()
+        {
+            Stack S1 = new Stack();
+            Queue Q1 = new Queue();
+            Write("Nhap so phan tu cua Stack S1: ");
+            int n = Convert.ToInt32(ReadLine()); 
+            
+            for (int i =0; i<n; i++)
+            {
+                lap:
+                Write("Phan tu thu {0} la: ", i + 1);
+                int x = Convert.ToInt32(ReadLine());
+                if ( x % 2== 0 )
+                {
+                    S1.Push(x);
+                }
+                else
+                {
+                    Write("Loi! Yeu cau nhap so chan: \n");
+                    goto lap;
+                }
+                
+            }   
+
+            Write("Nhap so phan tu cua Queue Q1: ");
+            int m = Convert.ToInt32(ReadLine());
+            for (int i = 0; i < m; i++)
+            {
+                lace:
+                Write("Phan tu thu {0} la: ", i + 1);
+                int y = Convert.ToInt32(ReadLine());
+                if (y % 2 == 1)
+                {
+                    Q1.Enqueue(y);
+                }
+                else
+                {
+                    Write("Loi! Yeu cau nhap so le: \n");
+                    goto lace;
+                }
+            }
+            Write("\nHien stack s1 ra man hinh: ");
+
+            foreach (var item in S1)
+            {
+                WriteLine();
+                Write(item);
+            }
+            Write("\nHien Queue Q1 ra man hinh: ");
+
+            foreach (var item in Q1)
+            {
+                WriteLine();
+                Write(item);
+            }
+        }
+
+        public void Bai4()
+        {
+            Queue HoTen = new Queue();
+            int n = 10;
+            for (int i = 0; i < n; i++)
+            {
+                Write("Ho ten cua sinh vien thu {0} la: ", i + 1);
+                string Name = ReadLine();
+                HoTen.Enqueue(Name);
+            }
+            Write("\nDanh sach sinh vien theo thoi gian den lop: ");
+            foreach (string item in HoTen)
+            {
+                WriteLine();
+                Write(item);
+            }
+            WriteLine();
+
+
+            Write("Hay nhap ten sinh vien can xoa: ");
+            string xoaten = ReadLine();
+            
+            Queue DanhSachSV = new Queue();      //Tạo 1 queue danh sách sinh viên sau khi xóa
+            while(HoTen.Count>0)
+            {
+
+                string s = (string)HoTen.Peek();
+
+                HoTen.Dequeue();
+
+                if(s.CompareTo(xoaten) == 0)
+                {
+                    continue;
+                }
+                else
+                {
+                    DanhSachSV.Enqueue(s);
+                }
+            }
+
+            foreach (string item in DanhSachSV)
+            {
+                WriteLine();
+                Write(item);
+            }
+            WriteLine();
+
+
+        }
+        public struct ThoiGianDenLop
+        {
+            public string Name;
+            public DateTime ThoiGian;
+            public int MaSo;
+        }
+    }
+}
+        
